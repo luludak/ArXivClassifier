@@ -8,6 +8,7 @@ import torch.optim as optim
 import torch.nn as nn
 
 from onnx2torch import convert
+from helpers.model_helper import ModelHelper
 from classifier.papers import PapersDataset
 from classifier.model import PaperClassifier
 from classifier.predictor import Predictor
@@ -36,12 +37,15 @@ if format is None or (format != "ONNX" and format != "PyTorch"):
 
 print(f"Model Format: {format}")
 
-taxonomy_path = "dataset/category_taxonomy.csv"
-model_path = "models/paper_classifier"
-dataset_path = "dataset/arxiv_data.csv"
+# Load configuration.
+helper = ModelHelper()
+config = helper.load_config('./config.json')
 
-prediction_threshold = 0.1
-onnx_mode = False
+taxonomy_path = config["taxonomy_path"]
+model_path = config["model_path"]
+dataset_path = config["dataset_path"]
+
+prediction_threshold = float(config["prediction_threshold"])
 
 # Load and create taxonomy file.
 taxonomy_df = pd.read_csv(taxonomy_path)
@@ -107,7 +111,6 @@ while True:
 
     if user_input.strip().lower() == "exit":
         break
-
     try:
         # Perform prediction.
         predictions = predictor.predict(user_input, prediction_threshold)

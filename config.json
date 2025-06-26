@@ -1,0 +1,6 @@
+{
+    "taxonomy_path": "dataset/category_taxonomy.csv",
+    "model_path": "models/paper_classifier",
+    "dataset_path": "dataset/arxiv_data.csv",
+    "prediction_threshold": 0.1
+}

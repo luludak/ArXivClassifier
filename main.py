@@ -6,6 +6,7 @@ from torch.utils.data import DataLoader
 import torch
 import torch.optim as optim
 import torch.nn as nn
+import joblib
 
 from onnx2torch import convert
 from argparse import ArgumentParser
@@ -45,6 +46,8 @@ config = helper.load_config('./config.json')
 taxonomy_path = config["taxonomy_path"]
 model_path = config["model_path"]
 dataset_path = config["dataset_path"]
+vectorizer_path = config["vectorizer_path"]
+binarizer_path = config["binarizer_path"]
 
 prediction_threshold = float(config["prediction_threshold"])
 
@@ -58,29 +61,32 @@ taxonomy_lookup = {
     for _, row in taxonomy_df.iterrows()
 }
 
-# Load dataset CSV.
-df = pd.read_csv(dataset_path)
-
-# Combine title and summary.
-df["text"] = f"{df['titles']} {df['summaries']}"
-
-# Convert label strings to actual lists.
-df["terms"] = df["terms"].apply(eval)
-
-# TF-IDF vectorization.
-vectorizer = TfidfVectorizer(max_features=10000)
-X = vectorizer.fit_transform(df["text"])
-
-# Encode target labels.
-taxonomy_codes = list(taxonomy_lookup.keys())
-mlb = MultiLabelBinarizer(classes=taxonomy_codes)
-Y = mlb.fit_transform(df["terms"])
-
 # Train the model if enabled.
 if epochs is not None:
+    
     print("Training model. Epochs: " + str(epochs) + ".")
+    
+    # Load dataset CSV.
+    df = pd.read_csv(dataset_path)
 
-    print("Input shape:", X.shape, "Output shape:", Y.shape)
+    # Combine title and summary.
+    df["text"] = df['titles'] + " " + df['summaries']
+
+    # Convert label strings to actual lists.
+    df["terms"] = df["terms"].apply(eval)
+
+    # TF-IDF vectorization.
+    vectorizer = TfidfVectorizer(max_features=10000)
+
+    # Encode target labels.
+    taxonomy_codes = list(taxonomy_lookup.keys())
+    mlb = MultiLabelBinarizer(classes=taxonomy_codes)
+
+    X = vectorizer.fit_transform(df["text"])
+    Y = mlb.fit_transform(df["terms"])
+
+    joblib.dump(vectorizer, vectorizer_path)
+    joblib.dump(mlb, binarizer_path)
 
     # Setup the dataset wrapper.
     dataset = PapersDataset(X, Y)
@@ -106,7 +112,10 @@ else:
     model = convert(onnx_model)
 
 # Prediction/inference loop.
+vectorizer = joblib.load(vectorizer_path)
+mlb = joblib.load(binarizer_path)
 predictor = Predictor(model, vectorizer, mlb, taxonomy_lookup)
+
 while True:
     user_input = input("> ")
 

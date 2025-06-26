@@ -28,8 +28,7 @@ You need to donwload the dataset, and place it in the `datasets` folder.
 After that, you can train the model by doing `python main.py -t <Epochs> -f <Format: (ONNX | PyTorch)>`. Once training is complete, the model will be automatically utilized for execution.
 
 ### Run Model
-To load the model without training after it is training, simply do `python main.py -f <FORMAT>`. If no format is specified, a `PyTorch (.pth)` model will be loaded.
-This will load the file.
+To load the model without training after it is training, simply do `python main.py -f <FORMAT>`. If no format is specified, a `PyTorch (.pth)` model will be loaded (if it exists).
 
 ### Output Format
 You can output the model by specifying the `-f` parameter, specifying either `ONNX` or `PyTorch` format, e.g., `python main.py -t 100 -f ONNX`, both for training and loading purposes.

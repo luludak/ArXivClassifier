@@ -62,7 +62,7 @@ taxonomy_lookup = {
 df = pd.read_csv(dataset_path)
 
 # Combine title and summary.
-df["text"] = df["titles"] + " " + df["summaries"]
+df["text"] = f"{df['titles']} {df['summaries']}"
 
 # Convert label strings to actual lists.
 df["terms"] = df["terms"].apply(eval)

@@ -8,13 +8,13 @@ import torch.optim as optim
 import torch.nn as nn
 
 from onnx2torch import convert
-from decimal import Decimal
 from classifier.papers import PapersDataset
 from classifier.model import PaperClassifier
 from classifier.predictor import Predictor
 from classifier.trainer import Trainer
 
 from argparse import ArgumentParser
+from pathlib import Path
 
 parser = ArgumentParser()
 
@@ -23,6 +23,9 @@ parser.add_argument("-t", "--train", type=int, dest="train",
 
 parser.add_argument("-f", "--format", type=str, dest="format",
                 help="Specify output model format (ONNX | PyTorch). Default is PyTorch.")
+
+# Create models folder.
+Path("models").mkdir(parents=True, exist_ok=True)
 
 args = parser.parse_args()
 epochs = args.train

@@ -49,7 +49,7 @@ class Trainer:
                         opset_version=11
                     )
 
-                print("Model exported to path: " + self.model_path + ".onnx" if format == "onnx" else ".pth") 
+                print("Model exported to path: " + (self.model_path + ".onnx" if format == "ONNX" else ".pth")) 
             else:
                 print(f"Early stopping in epoch {epoch+1}")
                 break

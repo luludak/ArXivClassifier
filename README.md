@@ -1,9 +1,11 @@
 # ArXiv Paper Classifier
 
-This is a classifier for ArXiv papers. It is trained against ~50K papers from (Kaggle)[https://www.kaggle.com/datasets/barclaysav/b-interview-arxiv-dataset/] and is able to classify the paper category, based on the title and/or abstract/description.
+This is a classifier for ArXiv papers. It is trained against ~50K papers from [Kaggle](https://www.kaggle.com/datasets/barclaysav/b-interview-arxiv-dataset) and is able to classify the paper category, based on the title and/or abstract/description.
 
 ## Details
 The model consists of 4 Fully-Connected Linear layers, and performs classification across 154 categories. The training process utilizes backpropagation via the `Adam` optimizer and `BCEWithLogitsLoss` criterion. And introduces early stopping when a loss larger than the already observed best loss is identified (meaning that the loss stopped minimizing).
+
+![Model](https://github.com/user-attachments/assets/ae476fd7-ef9e-413e-bbb0-88d2d9af6cdd)
 
 ## Implementation
 The tool is implemented in Python, utilizing the PyTorch API, as well as the ONNX API (for the case ONNX is selected as format). We utilize TF-IDF vectorization for the tokens.

@@ -8,15 +8,16 @@ import torch.optim as optim
 import torch.nn as nn
 
 from onnx2torch import convert
+from argparse import ArgumentParser
+from pathlib import Path
+
 from helpers.model_helper import ModelHelper
 from classifier.papers import PapersDataset
 from classifier.model import PaperClassifier
 from classifier.predictor import Predictor
 from classifier.trainer import Trainer
 
-from argparse import ArgumentParser
-from pathlib import Path
-
+# Argument parsing.
 parser = ArgumentParser()
 
 parser.add_argument("-t", "--train", type=int, dest="train",

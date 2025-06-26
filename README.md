@@ -1,6 +1,6 @@
 # ArXiv Paper Classifier
 
-This is a classifier for arXiv papers. It is trained against ~50K papers from [Kaggle](https://www.kaggle.com/datasets/barclaysav/b-interview-arxiv-dataset) and is able to get the paper title and/or abstract/description and classify the category.
+This is a classifier for arXiv papers. It is trained against ~50K arXiv paper titles and descriptions (obtained from [Kaggle](https://www.kaggle.com/datasets/barclaysav/b-interview-arxiv-dataset)) and is able to get the paper title and/or abstract/description as input and classify it across 154 distinct categories.
 
 ## Details
 The model consists of 4 Fully-Connected Linear layers and 3 ReLU activation functions, and performs classification across 154 categories. The training process utilizes backpropagation via the `Adam` optimizer and `BCEWithLogitsLoss` criterion. And introduces early stopping when a loss larger than the already observed best loss is identified (meaning that the loss stopped minimizing). During training, a dropout rate of `30%` is specified.

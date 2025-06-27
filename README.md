@@ -3,7 +3,7 @@
 This is a classifier for arXiv papers. It is trained against ~50K papers from (Kaggle)[https://www.kaggle.com/datasets/barclaysav/b-interview-arXiv-dataset/] and is able to classify the paper category, based on the title and/or abstract/description.
 
 ## Details
-The model consists of 4 Fully-Connected Linear layers, and performs classification across 154 categories. The training process utilizes backpropagation via the `Adam` optimizer and `BCEWithLogitsLoss` criterion. And introduces early stopping when a loss larger than the already observed best loss is identified (meaning that the loss stopped minimizing).
+The model consists of 4 Fully-Connected Linear layers, and performs classification across 154 categories. It consists of about 11M parameters. The training process utilizes backpropagation via the `Adam` optimizer and `BCEWithLogitsLoss` criterion. And introduces early stopping when a loss larger than the already observed best loss is identified (meaning that the loss stopped minimizing).
 
 ![Model](https://github.com/user-attachments/assets/53a6c904-4fc7-4bb3-bb93-9bd0781ff41d)
 

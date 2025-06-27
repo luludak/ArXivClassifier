@@ -23,6 +23,9 @@ The system configuration is defined in `config.json`. In particular:
 
 ## Instructions
 
+### Install
+You will need Python `3.5+` and `pip`. Run `pip install -r requirements.txt`.
+
 ### Train Model
 You need to donwload the dataset, and place it in the `datasets` folder.
 After that, you can train the model by doing `python main.py -t <Epochs> -f <Format: (ONNX | PyTorch)>`. Once training is complete, the model will be automatically utilized for execution.
